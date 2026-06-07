@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Randomized shear-force and bending-moment student practice." />
+    <title>Shear-Moment Practice</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Mechanics of materials · student practice</p>
+          <h1>Shear-Moment Check</h1>
+        </div>
+        <div class="top-actions">
+          <span id="attemptStatus" class="attempt-status">Attempt 1 of 3</span>
+          <button id="newCaseButton" type="button">Generate New Case</button>
+        </div>
+      </header>
+
+      <section class="problem-band">
+        <div>
+          <span>Boundary condition</span>
+          <strong id="supportDescription">Pin/roller supports</strong>
+        </div>
+        <div>
+          <span>Beam length</span>
+          <strong id="beamLength">0 m</strong>
+        </div>
+        <div>
+          <span>Eval. Location</span>
+          <strong id="stationValue">x = 0 m</strong>
+        </div>
+        <div>
+          <span>Sign convention</span>
+          <strong>Up, right, and CCW are positive (right-hand rule)</strong>
+        </div>
+      </section>
+
+      <section class="workspace-grid">
+        <aside class="student-column">
+          <section class="panel">
+            <div class="section-heading">
+              <span>01</span>
+              <div>
+                <p>Given loading</p>
+                <h2>Beam and loads</h2>
+              </div>
+            </div>
+            <svg id="problemDiagram" class="diagram" viewBox="0 0 760 310" role="img" aria-label="Random beam loading problem"></svg>
+            <div id="loadList" class="load-list"></div>
+          </section>
+
+          <section class="panel">
+            <div class="section-heading">
+              <span>02</span>
+              <div>
+                <p>Student response</p>
+                <h2>Calculation check</h2>
+              </div>
+            </div>
+
+            <div class="answer-grid">
+              <label id="fieldRA">
+                <span id="labelRA">Reaction, R<sub>A</sub> <b>kN</b></span>
+                <input id="answerRA" type="text" inputmode="decimal" autocomplete="off" />
+                <small id="feedbackRA">Awaiting answer</small>
+              </label>
+              <label id="fieldRB">
+                <span id="labelRB">Reaction, R<sub>B</sub> <b>kN</b></span>
+                <input id="answerRB" type="text" inputmode="decimal" autocomplete="off" />
+                <small id="feedbackRB">Awaiting answer</small>
+              </label>
+              <label id="fieldRC" class="hidden">
+                <span id="labelRC">Reaction, R<sub>C</sub> <b>kN</b></span>
+                <input id="answerRC" type="text" inputmode="decimal" autocomplete="off" />
+                <small id="feedbackRC">Awaiting answer</small>
+              </label>
+              <label>
+                <span>V at Eval. Location <b>kN</b></span>
+                <input id="answerV" type="text" inputmode="decimal" autocomplete="off" />
+                <small id="feedbackV">Awaiting answer</small>
+              </label>
+              <label>
+                <span>M at Eval. Location <b>kN·m</b></span>
+                <input id="answerM" type="text" inputmode="decimal" autocomplete="off" />
+                <small id="feedbackM">Awaiting answer</small>
+              </label>
+              <label>
+                <span>Maximum |M| <b>kN·m</b></span>
+                <input id="answerMaxM" type="text" inputmode="decimal" autocomplete="off" />
+                <small id="feedbackMaxM">Awaiting answer</small>
+              </label>
+              <label>
+                <span>Location of maximum |M| <b>m</b></span>
+                <input id="answerMaxX" type="text" inputmode="decimal" autocomplete="off" />
+                <small id="feedbackMaxX">Awaiting answer</small>
+              </label>
+            </div>
+
+            <button id="checkButton" class="check-button" type="button">Check Calculations</button>
+          </section>
+
+          <section class="panel feedback-panel">
+            <div class="section-heading">
+              <span>03</span>
+              <div>
+                <p>Method guidance</p>
+                <h2>Feedback</h2>
+              </div>
+            </div>
+            <div id="methodFeedback" class="method-feedback">
+              Use equilibrium to find the reactions, then move from left to right using dV/dx = -w and dM/dx = V.
+            </div>
+          </section>
+        </aside>
+
+        <section class="solution-column">
+          <section id="lockedSolution" class="locked-solution">
+            <div class="lock-mark">V / M</div>
+            <h2>Diagrams locked</h2>
+            <p>Check your calculated reactions, station values, and maximum moment. The diagrams unlock after a correct submission or after the third attempt.</p>
+          </section>
+
+          <div id="solutionContent" class="solution-content hidden">
+            <section class="summary-strip">
+              <div><span>Support reactions</span><strong id="summaryReactions">0 kN</strong></div>
+              <div><span>Maximum |M|</span><strong id="summaryMaxM">0 kN·m</strong></div>
+              <div><span>At location</span><strong id="summaryMaxX">0 m</strong></div>
+            </section>
+
+            <section class="plot-panel">
+              <div class="plot-heading">
+                <div>
+                  <p>Solution</p>
+                  <h2>Shear force diagram</h2>
+                </div>
+                <span>V(x), kN</span>
+              </div>
+              <svg id="shearPlot" class="plot" viewBox="0 0 900 370" role="img" aria-label="Shear force diagram"></svg>
+            </section>
+
+            <section class="plot-panel">
+              <div class="plot-heading">
+                <div>
+                  <p>Solution</p>
+                  <h2>Bending moment diagram</h2>
+                </div>
+                <span>M(x), kN·m</span>
+              </div>
+              <svg id="momentPlot" class="plot" viewBox="0 0 900 370" role="img" aria-label="Bending moment diagram"></svg>
+            </section>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>
